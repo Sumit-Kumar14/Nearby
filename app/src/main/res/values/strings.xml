@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">BusApp</string>
+    <string name="bus_db">BusDB</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_route_picker">RoutePicker</string>
+    <string name="gps_network_not_enabled">We are unable to get your current location since your GPS is not enabled. You can either enable your GPS or fill your location manually.</string>
+    <string name="open_location_settings">Enable GPS?</string>
+    <string name="location_settings_cancel">Fill Manually</string>
+    <string name="data_network_not_enabled">You are not connected to the internet. Do you want to enable now?</string>
+    <string name="open_data_settings">Go to network settings</string>
+    <string name="enable_data_network_cancel">Exit application</string>
+    <string name="exiting_app">Exiting..</string>
+    <string name="title_activity_where">Where</string>
+    <string name="title_activity_getting_on">GettingOn</string>
+    <string name="no_location_detected">Cannot get location</string>
+    <string name="location_updated_message">Updated Location</string>
+    <string name="title_activity_splash">Bus App</string>
+
+    <string name="use_gps">Use GPS for location</string>
+    <string name="use_wifi">Turn on Wi-Fi</string>
+    <string name="improve_location_msg">This app wants to change your device settings:</string>
+    <string name="poor_net">No or poor internet connection</string>
+    <string name="server_error">Oops!! Something went wrong on server side.</string>
+    <string name="try_again">Try again</string>
+    <string name="drawer_open">Drawer Open</string>
+    <string name="drawer_closed">Drawer Closed</string>
+    <string name="title_activity_search">Search</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_compute_segment">ComputeSegment</string>
+
+    <string name="title_activity_places">Places</string>
+    <string name="title_activity_place_result">Places</string>
+</resources>

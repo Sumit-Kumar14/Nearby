@@ -1,0 +1,57 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:id="@+id/header">
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Search Places"
+            android:fadeScrollbars="true"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:minHeight="70dp"
+            android:textSize="14sp"
+            android:textColor="#000"
+            android:id="@+id/autocomplete_places"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:typeface="sans" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/powered_by_google_dark"
+            android:layout_below="@+id/autocomplete_places"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:id="@+id/place_attribution"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#CCC"
+            android:background="#fff"
+            android:layout_below="@id/autocomplete_places" />
+    </RelativeLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rum_sources_listview"
+        android:layout_below="@+id/header"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:id="@+id/errorTxt"
+        android:layout_centerInParent="true" />
+
+</RelativeLayout>

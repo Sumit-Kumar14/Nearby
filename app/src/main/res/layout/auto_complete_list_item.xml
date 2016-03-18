@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:background="#FFF">
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_place_black_24dp"
+        android:scaleType="center" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/place_auto_complete_desc"
+        android:textColor="#111"
+        android:maxLines="2"
+        android:paddingEnd="10dp"
+        android:gravity="center_vertical" />
+</LinearLayout>

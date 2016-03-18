@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Search Places"
+            android:fadeScrollbars="true"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:minHeight="70dp"
+            android:textSize="14sp"
+            android:textColor="#000"
+            android:id="@+id/autocomplete_places"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:typeface="sans" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/powered_by_google_dark"
+            android:layout_below="@+id/autocomplete_places"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:id="@+id/place_attribution"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#CCC"
+            android:background="#fff"
+            android:layout_below="@id/autocomplete_places" />
+    </RelativeLayout>
+
+    <com.infinity.dev.nearby.SlidingTabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:paddingTop="10dp"
+        android:background="@color/colorPrimary"/>
+
+    <LinearLayout
+        android:id="@+id/grad"
+        android:layout_width="match_parent"
+        android:layout_height="7dp"
+        android:background="@drawable/searchbarback"
+        android:orientation="horizontal">
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/places_detail">
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout>

@@ -1,8 +1,5 @@
 package com.infinity.dev.Utility;
 
-/**
- * Created by suny on 29/8/15.
- */
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.Status;

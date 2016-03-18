@@ -19,7 +19,7 @@
             android:scaleType="centerInside"
             android:layout_margin="16dp"
             android:src="@drawable/ic_arrow_back_white_24dp"
-            android:id="@+id/drawerBtn" />
+            android:id="@+id/back" />
 
         <TextView
             android:layout_width="0dp"

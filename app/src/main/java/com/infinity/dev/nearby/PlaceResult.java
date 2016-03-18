@@ -2,6 +2,7 @@ package com.infinity.dev.nearby;
 
 import android.app.ProgressDialog;
 import android.location.Location;
+import android.media.Image;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,8 +55,25 @@ public class PlaceResult extends FragmentActivity implements Locatable, FetchFro
         super.onCreate(savedInstanceState);
         setContentView(R.layout.places_list);
 
-        kind = getIntent().getStringExtra("Place_id");
+        ImageView back = (ImageView)findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PlaceResult.this, PlacesMain.class);
+                startActivity(intent);
+            }
+        });
 
+        ImageView search = (ImageView)findViewById(R.id.search);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PlaceResult.this, Search.class);
+                startActivity(intent);
+            }
+        });
+
+        kind = getIntent().getStringExtra("Place_id");
         TextView placeKind = (TextView)findViewById(R.id.namePlaceHolder);
         placeKind.setText(kind.replace("_", " "));
         new Locator(this, this).execute();

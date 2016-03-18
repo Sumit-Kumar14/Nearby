@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -46,13 +47,15 @@ import com.infinity.dev.Services.FetchPlaceInfo;
 import com.infinity.dev.Utility.PlaceAutoComplete;
 import com.infinity.dev.Utility.PlaceDetailParser;
 import com.infinity.dev.nearby.PagerAnimation;
+import com.infinity.dev.nearby.PlacesMain;
 import com.infinity.dev.nearby.R;
+import com.infinity.dev.nearby.Search;
 import com.infinity.dev.nearby.SlidingTabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlaceDetail extends FragmentActivity implements PlaceInfoReceiver.Receiver, GoogleApiClient.OnConnectionFailedListener{
+public class PlaceDetail extends FragmentActivity implements PlaceInfoReceiver.Receiver{
 
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
@@ -61,26 +64,29 @@ public class PlaceDetail extends FragmentActivity implements PlaceInfoReceiver.R
     ProgressDialog progressDialog;
     private PlaceInfoReceiver mReceiver;
     private Context context = this;
-    private MapView mMap;
-
-    protected GoogleApiClient mGoogleApiClient;
-    private PlaceAutoComplete mAdapter;
-    private AutoCompleteTextView mAutocompleteView;
-
-    private static final LatLngBounds BOUNDS_WORLD = new LatLngBounds(new LatLng(0.0, 0.0), new LatLng(0.0, 0.0));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.place_detail);
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, 0, this).addApi(Places.GEO_DATA_API).build();
+        ImageView back = (ImageView)findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PlaceDetail.this, PlacesMain.class);
+                startActivity(intent);
+            }
+        });
 
-        mAutocompleteView = (AutoCompleteTextView)findViewById(R.id.autocomplete_places);
-        mAutocompleteView.clearFocus();
-        mAutocompleteView.setOnItemClickListener(mAutocompleteClickListener);
-        mAdapter = new PlaceAutoComplete(this, R.layout.auto_complete_list_item, mGoogleApiClient, BOUNDS_WORLD, null);
-        mAutocompleteView.setAdapter(mAdapter);
+        ImageView search = (ImageView)findViewById(R.id.search);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PlaceDetail.this, Search.class);
+                startActivity(intent);
+            }
+        });
 
         Intent intent = getIntent();
         String placeId = intent.getStringExtra("placeId");
@@ -91,7 +97,7 @@ public class PlaceDetail extends FragmentActivity implements PlaceInfoReceiver.R
         mReceiver.setReceiver(this);
         Intent placeDetailIntent = new Intent(Intent.ACTION_SYNC, null, this, FetchPlaceDetailInfo.class);
 
-        /* Send optional extras to Download IntentService */
+
         placeDetailIntent.putExtra("url", url);
         placeDetailIntent.putExtra("receiver", mReceiver);
         placeDetailIntent.putExtra("requestId", 101);
@@ -140,26 +146,6 @@ public class PlaceDetail extends FragmentActivity implements PlaceInfoReceiver.R
         });
 
         tabs.setViewPager(mViewPager);
-    }
-
-    private AdapterView.OnItemClickListener mAutocompleteClickListener
-            = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            final PlaceAutoComplete.PlaceAutocomplete item = mAdapter.getItem(position);
-            final String placeId = String.valueOf(item.placeId);
-
-            Intent intent = new Intent(context, PlaceDetail.class);
-            intent.putExtra("placeId", placeId);
-            startActivity(intent);
-        }
-    };
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-
-        Log.e("PlaceDetail", "onConnectionFailed: ConnectionResult.getErrorCode() = "
-                + connectionResult.getErrorCode());
     }
 
     @Override

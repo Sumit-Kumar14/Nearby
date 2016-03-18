@@ -1,7 +1,6 @@
 package com.infinity.dev.nearby;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.support.v7.widget.RecyclerView;
@@ -10,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
-import com.infinity.dev.PlaceDetail.PlaceDetail;
 
 import java.util.List;
 
@@ -27,6 +24,7 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.View
         TextView address;
         TextView isOpen;
         TextView distance;
+        TextView time;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -34,6 +32,8 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.View
             rating = (RatingBar)itemView.findViewById(R.id.rating);
             address = (TextView)itemView.findViewById(R.id.address);
             isOpen = (TextView)itemView.findViewById(R.id.isOpen);
+            distance = (TextView)itemView.findViewById(R.id.distance);
+            time = (TextView)itemView.findViewById(R.id.time);
         }
     }
 
@@ -72,7 +72,12 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.View
             holder.isOpen.setText("Currently Closed");
         }
         holder.address.setText(list.get(position).getVicinity());
-
+        double distance = distance(loc.getLatitude(), loc.getLongitude(), list.get(position).getLatitude(), list.get(position).getLongitude(), "K");
+        holder.time.setText(String.format("%.2f", ((distance / 5) * 60)) + " min");
+        if(distance < 1)
+            holder.distance.setText(String.format("%.0f", distance * 1000) + " m");
+        else
+            holder.distance.setText(String.format("%.2f", distance) + " km");
     }
 
     private static double distance(double lat1, double lon1, double lat2, double lon2, String unit) {

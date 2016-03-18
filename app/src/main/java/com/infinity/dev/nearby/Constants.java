@@ -3,10 +3,6 @@ package com.infinity.dev.nearby;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by suny on 5/8/15.
- */
-
 public class Constants {
 
     Map<String, String> places;

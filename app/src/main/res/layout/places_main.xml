@@ -12,13 +12,6 @@
         android:gravity="center"
         android:background="@color/colorPrimary"
         android:id="@+id/contentDescription">
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:scaleType="centerInside"
-            android:layout_margin="16dp"
-            android:src="@drawable/ic_arrow_back_white_24dp"
-            android:id="@+id/drawerBtn" />
 
         <TextView
             android:layout_width="0dp"
@@ -27,12 +20,13 @@
             android:id="@+id/namePlaceHolder"
             android:textAllCaps="true"
             android:textColor="#fff"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:scrollHorizontally="true"
             android:ellipsize="end"
             android:maxLines="1"
-            android:gravity="center"
+            android:gravity="start|center_vertical"
+            android:layout_marginStart="16dp"
             android:text="Nearby"/>
 
         <ImageView

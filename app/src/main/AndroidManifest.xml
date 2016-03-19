@@ -38,23 +38,16 @@
         </activity>
         <activity
             android:name=".PlacesMain"
-            android:label="@string/title_activity_places"></activity>
+            android:label="@string/title_activity_places"/>
         <activity
             android:name="com.infinity.dev.PlaceDetail.PlaceDetail"
-            android:label="@string/title_activity_places"></activity>
+            android:label="@string/title_activity_places"/>
         <activity
             android:name=".PlaceResult"
             android:label="@string/title_activity_place_result"
-            android:parentActivityName=".PlacesMain"></activity>
+            android:parentActivityName=".PlacesMain"/>
 
-        <service
-            android:name="com.infinity.dev.Services.FetchPlaceInfo"
-            android:exported="false"></service>
-        <service
-            android:name="com.infinity.dev.Services.FetchPlaceDetailInfo"
-            android:exported="false"></service>
-
-        <activity android:name=".Search"></activity>
+        <activity android:name=".Search"/>
     </application>
 
 </manifest>

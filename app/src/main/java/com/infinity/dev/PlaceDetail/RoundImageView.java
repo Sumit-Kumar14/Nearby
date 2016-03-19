@@ -1,5 +1,6 @@
 package com.infinity.dev.PlaceDetail;
 
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,9 +17,6 @@ import android.widget.ImageView;
 
 import com.infinity.dev.nearby.R;
 
-/**
- * Created by suny on 22/8/15.
- */
 public class RoundImageView extends ImageView {
 
     Context context;
@@ -48,16 +46,18 @@ public class RoundImageView extends ImageView {
         if (getWidth() == 0 || getHeight() == 0) {
             return;
         }
-        Bitmap b =  ((BitmapDrawable)drawable).getBitmap() ;
-        Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
+        Bitmap b =  ((BitmapDrawable)drawable).getBitmap();
+        if(b != null) {
+            Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
 
-        int w = getWidth(), h = getHeight();
+            int w = getWidth(), h = getHeight();
 
-        Bitmap roundBitmap =  getCroppedBitmap(bitmap, w);
-        if(bitmap.sameAs(person)){
-            canvas.drawBitmap(roundBitmap, w/2 - roundBitmap.getWidth()/2, h/2 - roundBitmap.getHeight()/2, null);
-        }else {
-            canvas.drawBitmap(roundBitmap, 0, 0, null);
+            Bitmap roundBitmap = getCroppedBitmap(bitmap, w);
+            if (bitmap.sameAs(person)) {
+                canvas.drawBitmap(roundBitmap, w / 2 - roundBitmap.getWidth() / 2, h / 2 - roundBitmap.getHeight() / 2, null);
+            } else {
+                canvas.drawBitmap(roundBitmap, 0, 0, null);
+            }
         }
     }
 

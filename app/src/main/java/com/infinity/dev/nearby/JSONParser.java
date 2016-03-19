@@ -45,7 +45,7 @@ public class JSONParser {
         return jsonArray;
     }
 
-    public List<PlaceBean> getPlaceBeanList(){
+    public List<PlaceBean> getPlaceBeanList() throws Exception{
 
         double latitude, longitude;
         String id, name, vicinity, type;
@@ -146,6 +146,7 @@ public class JSONParser {
             }
         }catch (JSONException ex){
             Log.e("JSON Parsing", "Not able to parse", ex);
+            throw new Exception("Something went wrong on server.");
         }
         return this.placeBeanList;
     }

@@ -21,43 +21,16 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/places_detail_phone_desc"
-                android:text="Phone"
-                android:textColor="#555"
-                android:textStyle="bold"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="30dp"
-                android:gravity="center"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/places_detail_phone_detail"
-                android:layout_weight="1"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="30dp"
-                android:textStyle="bold"
-                android:textSize="12sp"
-                android:textColor="#006a79"
-                android:gravity="end"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/places_detail_int_phone_desc"
-                android:text="International Phone"
+                android:text="Phone"
                 android:textColor="#555"
                 android:textStyle="bold"
-                android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="30dp"
                 android:scaleType="center"
@@ -67,7 +40,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/places_detail_int_phone_detail"
                 android:layout_weight="1"
-                android:layout_marginTop="20dp"
                 android:layout_marginEnd="30dp"
                 android:textStyle="bold"
                 android:textSize="12sp"
@@ -76,178 +48,39 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/places_detail_rating_desc"
                 android:text="Rating"
+                android:layout_weight="1"
                 android:textColor="#555"
                 android:textStyle="bold"
-                android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="30dp"
-                android:gravity="center"/>
-            <LinearLayout
-                android:layout_width="0dp"
+                android:gravity="start"/>
+
+            <RatingBar
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center_vertical|right"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp">
-                <LinearLayout
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:src="@drawable/ic_star_black_18dp"
-                        android:layout_marginRight="3dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:textSize="10dp"
-                        android:text="5"
-                        android:layout_marginRight="3dp"
-                        android:gravity="top" />
-                    <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="10dp"
-                        android:id="@+id/rating_5"
-                        android:background="@android:color/holo_green_dark"
-                        android:layout_marginBottom="5dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:id="@+id/rating_5t"
-                        android:textSize="10dp"
-                        android:layout_marginLeft="5dp" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:src="@drawable/ic_star_black_18dp"
-                        android:layout_marginRight="3dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:textSize="10dp"
-                        android:text="4"
-                        android:layout_marginRight="3dp"
-                        android:gravity="top" />
-                    <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="10dp"
-                        android:id="@+id/rating_4"
-                        android:background="@android:color/holo_green_light"
-                        android:layout_marginBottom="5dp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:id="@+id/rating_4t"
-                        android:textSize="10dp"
-                        android:layout_marginLeft="5dp" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:src="@drawable/ic_star_black_18dp"
-                        android:layout_marginRight="3dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:textSize="10dp"
-                        android:text="3"
-                        android:layout_marginRight="3dp"
-                        android:gravity="top" />
-                    <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="10dp"
-                        android:id="@+id/rating_3"
-                        android:background="@android:color/holo_orange_light"
-                        android:layout_marginBottom="5dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:id="@+id/rating_3t"
-                        android:textSize="10dp"
-                        android:layout_marginLeft="5dp" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:src="@drawable/ic_star_black_18dp"
-                        android:layout_marginRight="3dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:textSize="10dp"
-                        android:text="2"
-                        android:layout_marginRight="3dp"
-                        android:gravity="top" />
-                    <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="10dp"
-                        android:id="@+id/rating_2"
-                        android:background="@android:color/holo_orange_dark"
-                        android:layout_marginBottom="5dp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:id="@+id/rating_2t"
-                        android:textSize="10dp"
-                        android:layout_marginLeft="5dp" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:src="@drawable/ic_star_black_18dp"
-                        android:layout_marginRight="3dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:textSize="10dp"
-                        android:text="1"
-                        android:layout_marginRight="3dp"
-                        android:gravity="top" />
-                    <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="10dp"
-                        android:id="@+id/rating_1"
-                        android:background="@android:color/holo_red_light"
-                        android:layout_marginBottom="5dp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:id="@+id/rating_1t"
-                        android:textSize="10dp"
-                        android:layout_marginLeft="5dp" />
-                </LinearLayout>
-            </LinearLayout>
+                android:id="@+id/rating"
+                android:numStars="5"
+                android:layout_marginEnd="30dp"
+                style="?android:attr/ratingBarStyleSmall"
+                android:isIndicator="true"
+                android:focusable="false"
+                android:clickable="false"/>
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:minHeight="50dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -255,7 +88,6 @@
                 android:text="Address"
                 android:textColor="#555"
                 android:textStyle="bold"
-                android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="30dp"
                 android:gravity="center"/>
@@ -264,7 +96,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/places_detail_address_detail"
                 android:layout_weight="1"
-                android:layout_marginTop="20dp"
                 android:layout_marginEnd="30dp"
                 android:textStyle="bold"
                 android:textSize="12sp"

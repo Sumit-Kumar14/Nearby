@@ -3,16 +3,19 @@ package com.infinity.dev.nearby;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.infinity.dev.PlaceDetail.PlaceDetail;
 import com.infinity.dev.Utility.FetchFromServerTask;
 import com.infinity.dev.Utility.FetchFromServerUser;
 import com.infinity.dev.Utility.GooglePlacesBean;
@@ -33,6 +36,7 @@ public class Search extends FragmentActivity implements FetchFromServerUser, Loc
 
     List<SearchItemBean> results = new ArrayList<>();
     SearchResultAdapter resultAdapter;
+    SearchItemBean search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +47,22 @@ public class Search extends FragmentActivity implements FetchFromServerUser, Loc
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Search.this, PlacesMain.class);
-                startActivity(intent);
+                Search.this.finish();
             }
         });
 
         mAutocompleteView = (AutoCompleteTextView)findViewById(R.id.places_autocomplete);
+        FloatingActionButton getDirection = (FloatingActionButton)findViewById(R.id.getDirection);
+        getDirection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(search != null){
+                    Intent detailActivity = new Intent(Search.this, PlaceDetail.class);
+                    detailActivity.putExtra("placeId", search.getPlaceID());
+                    startActivity(detailActivity);
+                }
+            }
+        });
         new Locator(this, this).execute();
     }
 
@@ -59,17 +73,27 @@ public class Search extends FragmentActivity implements FetchFromServerUser, Loc
 
     @Override
     public void onFetchCompletion(String string, int id) {
-        GooglePlacesParser parser = new GooglePlacesParser(string);
-        ArrayList<GooglePlacesBean> placesList = parser.getPlaces();
-        for (int i = 0; i < placesList.size(); i++) {
-            SearchItemBean bean = new SearchItemBean();
-            bean.setName(placesList.get(i).getDescription());
-            bean.setType("Google");
-            results.add(bean);
+        if(string != null && !string.equals("")) {
+            GooglePlacesParser parser = new GooglePlacesParser(string);
+            ArrayList<GooglePlacesBean> placesList = parser.getPlaces();
+            for (int i = 0; i < placesList.size(); i++) {
+                SearchItemBean bean = new SearchItemBean();
+                bean.setName(placesList.get(i).getDescription());
+                bean.setPlaceID(placesList.get(i).getPlaceId());
+                bean.setType("Google");
+                results.add(bean);
+            }
+            resultAdapter.notifyDataSetChanged();
+            ListView resultList = (ListView) findViewById(R.id.searchResult);
+            resultList.setAdapter(resultAdapter);
+            resultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    search = results.get(position);
+                    mAutocompleteView.setText(search.getName());
+                }
+            });
         }
-        resultAdapter.notifyDataSetChanged();
-        ListView resultList = (ListView)findViewById(R.id.searchResult);
-        resultList.setAdapter(resultAdapter);
     }
 
     @Override

@@ -14,9 +14,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.infinity.dev.nearby.R;
 
-/**
- * Created by suny on 16/8/15.
- */
 public class AboutFragment extends Fragment{
 
     private GoogleMap mMap;

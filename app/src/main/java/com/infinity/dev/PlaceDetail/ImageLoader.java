@@ -7,11 +7,13 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.infinity.dev.Utility.LRUImageCache;
+import com.infinity.dev.nearby.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -20,9 +22,6 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
 
-/**
- * Created by suny on 22/8/15.
- */
 public class ImageLoader {
 
     String url;
@@ -39,8 +38,12 @@ public class ImageLoader {
         new DownloadImageTask().execute(url);
     }
 
-    public void loadThumbnailImage(){
-        new DownloadThumbImageTask().execute(url);
+    public void loadThumbnailImage() throws Exception{
+        try {
+            new DownloadThumbImageTask().execute(url);
+        }catch (Exception ex){
+            throw new Exception("Something went wrong on the server.");
+        }
     }
 
     private InputStream OpenHTTPConnection(String url) throws IOException
@@ -91,7 +94,7 @@ public class ImageLoader {
         }
         catch(IOException ex)
         {
-            Log.e("ImageLoader", ex.getLocalizedMessage());
+            Log.e("ImageLoader", "IOException");
         }
 
         return cachedImage;
@@ -151,7 +154,9 @@ public class ImageLoader {
 
             }catch (SocketTimeoutException ex){
                 Log.e("ImageLoader", "Socket connection timeout", ex);
-            }catch (Exception ex){
+            }catch (FileNotFoundException ex){
+                Log.e("ERROR",  url);
+            } catch (Exception ex){
                 Log.e("ERROR", "Unknown Error", ex);
             }
             finally {
@@ -178,7 +183,7 @@ public class ImageLoader {
                     result = temp[0] + "=100";
                 }
             }catch (JSONException ex){
-                Log.e("Review Adapter","Unable to load author icon");
+                Log.e("Review Adapter", ex.getMessage());
             }
             return result;
         }

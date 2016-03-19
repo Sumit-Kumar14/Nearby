@@ -38,12 +38,10 @@ public class SearchResultAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null) {
+        if(convertView == null)
             convertView = inflater.inflate(R.layout.auto_complete_list_item, parent, false);
-        }
 
         TextView searchResult = (TextView)convertView.findViewById(R.id.place_auto_complete_desc);
-
         searchResult.setText(items.get(position).getName());
         return convertView;
     }

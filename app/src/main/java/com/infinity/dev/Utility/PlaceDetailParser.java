@@ -19,18 +19,13 @@ import java.net.URL;
 
 import javax.net.ssl.SSLException;
 
-/**
- * Created by suny on 16/8/15.
- */
 public class PlaceDetailParser {
 
-    private String url;
     private String jsonData;
     private PlaceDetailBean detailBean;
 
-    public PlaceDetailParser(String url){
-        this.url = url;
-        jsonData = fetchNow();
+    public PlaceDetailParser(String data){
+        jsonData = data;
     }
 
     public String getStatus(){
@@ -46,51 +41,7 @@ public class PlaceDetailParser {
         return status;
     }
 
-    public String fetchNow(){
-        HttpURLConnection connection = null;
-        BufferedReader buffer = null;
-        StringBuffer stringBuffer = new StringBuffer();
-
-        try{
-            URL cloudURL = new URL(url);
-
-            connection = (HttpURLConnection)cloudURL.openConnection();
-            connection.setConnectTimeout(30000);
-            connection.setRequestMethod("GET");
-            connection.connect();
-
-            InputStream stream = connection.getInputStream();
-            buffer = new BufferedReader(new InputStreamReader(stream));
-            String line;
-
-            while((line = buffer.readLine()) != null){
-                stringBuffer.append(line + "\n");
-            }
-
-        }catch (SocketTimeoutException ex){
-            Log.e("MainActivity", "Socket connection timeout", ex);
-        }catch (SSLException sslex){
-            Log.e("ERROR", "Connection Timed Out", sslex);
-        }
-        catch (Exception ex){
-            Log.e("ERROR", "Unknown Error", ex);
-        }
-        finally {
-            if(connection != null){
-                connection.disconnect();
-            }
-            if(buffer != null){
-                try{
-                    buffer.close();
-                }catch (IOException ex){
-                    Log.e("Main Fragment", "Error Closing Stream", ex);
-                }
-            }
-        }
-        return stringBuffer.toString();
-    }
-
-    public PlaceDetailBean getPlaceDetail(){
+    public PlaceDetailBean getPlaceDetail() throws Exception{
         detailBean = new PlaceDetailBean();
         try {
             JSONObject jsonObject = new JSONObject(jsonData);
@@ -191,7 +142,8 @@ public class PlaceDetailParser {
                 detailBean.setReviews(null);
             }
         }catch(JSONException ex){
-
+            Log.e("PlaceDetailParser", ex.toString());
+            throw new Exception("Something went wrong on server.");
         }
         return detailBean;
     }

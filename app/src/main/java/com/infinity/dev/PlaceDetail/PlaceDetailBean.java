@@ -2,9 +2,6 @@ package com.infinity.dev.PlaceDetail;
 
 import java.io.Serializable;
 
-/**
- * Created by suny on 16/8/15.
- */
 public class PlaceDetailBean implements Serializable{
     private String formatted_address;
     private String formatted_phone_number;

@@ -1,13 +1,11 @@
 package com.infinity.dev.PlaceDetail;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
-import com.infinity.dev.Utility.LRUImageCache;
-import com.infinity.dev.nearby.R;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,22 +18,17 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URL;
-import java.net.URLConnection;
 
 public class ImageLoader {
 
     String url;
     ImageView imageView;
-    LRUImageCache imageCache;
+    Context context;
 
-    public ImageLoader(String url, ImageView imageView, LRUImageCache imageCache){
+    public ImageLoader(Context context, String url, ImageView imageView){
         this.url = url;
         this.imageView = imageView;
-        this.imageCache = imageCache;
-    }
-
-    public void loadImage(){
-        new DownloadImageTask().execute(url);
+        this.context = context;
     }
 
     public void loadThumbnailImage() throws Exception{
@@ -46,89 +39,16 @@ public class ImageLoader {
         }
     }
 
-    private InputStream OpenHTTPConnection(String url) throws IOException
+    private class DownloadThumbImageTask extends AsyncTask<String, Void, String>
     {
-
-        InputStream in = null;
-        int response;
-        URL in_url = new URL(url);
-        URLConnection connection = in_url.openConnection();
-
-        try
-        {
-            HttpURLConnection httpcon = (HttpURLConnection)connection;
-            httpcon.setRequestMethod("GET");
-            httpcon.connect();
-            response = httpcon.getResponseCode();
-            if(response == HttpURLConnection.HTTP_OK)
-            {
-                in = httpcon.getInputStream();
-            }
-        }
-        catch(Exception ex) {
-            Log.d("Networking", ex.getLocalizedMessage());
-            throw new IOException("Networking Error!");
-        }
-
-        return in;
-    }
-
-    private Bitmap DownloadImage(String URL)
-    {
-        InputStream in;
-
-        Bitmap cachedImage = imageCache.getBitmapFromCache(url);
-        try
-        {
-            if(cachedImage == null) {
-                Log.e(url, "Not found");
-                in = OpenHTTPConnection(URL);
-                cachedImage = BitmapFactory.decodeStream(in);
-                imageCache.addBitmaptoCache(url, cachedImage);
-                in.close();
-            }
-            else{
-                Log.d(url, "Found");
-                return cachedImage;
-            }
-        }
-        catch(IOException ex)
-        {
-            Log.e("ImageLoader", "IOException");
-        }
-
-        return cachedImage;
-    }
-
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap>
-    {
-        protected Bitmap doInBackground(String...urls)
+        protected String doInBackground(String...urls)
         {
             Log.d("doInBackground()", "Downloading Image");
-            return DownloadImage(urls[0]);
+            return getThumbURL(fetchNow(urls[0]));
         }
 
-        protected void onPostExecute(Bitmap result)
-        {
-            ImageView img = imageView;
-            Log.d("doPostExecute()", "Setting Image");
-            img.setImageBitmap(result);
-        }
-    }
-
-    private class DownloadThumbImageTask extends AsyncTask<String, Void, Bitmap>
-    {
-        protected Bitmap doInBackground(String...urls)
-        {
-            Log.d("doInBackground()", "Downloading Image");
-            return DownloadImage(getThumbURL(fetchNow(urls[0])));
-        }
-
-        protected void onPostExecute(Bitmap result)
-        {
-            ImageView img = imageView;
-            Log.d("doPostExecute()", "Setting Image");
-            img.setImageBitmap(result);
+        protected void onPostExecute(String result) {
+            Picasso.with(context).load(result).into(imageView);
         }
 
         public String fetchNow(String url){

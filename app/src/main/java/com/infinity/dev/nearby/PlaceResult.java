@@ -1,7 +1,6 @@
 package com.infinity.dev.nearby;
 
 import android.app.ProgressDialog;
-import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -20,18 +19,16 @@ import java.util.List;
 
 import com.infinity.dev.Utility.FetchFromServerTask;
 import com.infinity.dev.Utility.FetchFromServerUser;
-import com.infinity.dev.Utility.Locatable;
-import com.infinity.dev.Utility.Locator;
 import com.infinity.dev.Utility.RecyclerItemClickListener;
 
-public class PlaceResult extends FragmentActivity implements Locatable, FetchFromServerUser{
+public class PlaceResult extends FragmentActivity implements FetchFromServerUser{
 
     private static final String KEY = "AIzaSyA4YZWrcAoVVMxF28Z12tCOVn8DJMgty_w";
     ErrorFragment errorFragment;
     Context context = this;
     RecyclerView listOfPlaces;
     ProgressDialog progressDialog;
-    Location loc;
+    GetLocation loc;
     String kind;
     String url;
 
@@ -39,6 +36,8 @@ public class PlaceResult extends FragmentActivity implements Locatable, FetchFro
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.places_list);
+
+        loc = new GetLocation(this);
 
         ImageView back = (ImageView)findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
@@ -60,14 +59,9 @@ public class PlaceResult extends FragmentActivity implements Locatable, FetchFro
         kind = getIntent().getStringExtra("Place_id");
         TextView placeKind = (TextView)findViewById(R.id.namePlaceHolder);
         placeKind.setText(kind.replace("_", " "));
-        new Locator(this, this).execute();
-    }
 
-    @Override
-    public void onLocationComplete(Location location) {
-        url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + location.getLatitude()+","+location.getLongitude()+"&rankby=distance&types="+kind+"&key=" + KEY;;
+        url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + loc.latitude+","+loc.longitude+"&rankby=distance&types="+kind+"&key=" + KEY;;
         Log.e("PlaceResult", url);
-        loc = location;
         new FetchFromServerTask(this, 0).execute(url);
     }
 

@@ -103,7 +103,7 @@ public class PlaceDetailBean implements Serializable{
         this.reviews = reviews;
     }
 
-    public class Review{
+    public class Review implements Serializable{
         private String author_name;
         private String author_url;
         private float author_rating;

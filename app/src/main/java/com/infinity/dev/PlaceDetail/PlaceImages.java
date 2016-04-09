@@ -7,12 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.infinity.dev.Utility.LRUImageCache;
 import com.infinity.dev.nearby.R;
+import com.squareup.picasso.Picasso;
 
-/**
- * Created by suny on 22/8/15.
- */
 public class PlaceImages extends BaseAdapter {
 
     String baseurl = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=";
@@ -20,7 +17,6 @@ public class PlaceImages extends BaseAdapter {
     Context context;
     String imageId[];
     LayoutInflater inflater;
-    LRUImageCache imageCache = new LRUImageCache();
 
     public PlaceImages(Context context, String imageId[]){
         this.context = context;
@@ -49,7 +45,8 @@ public class PlaceImages extends BaseAdapter {
             convertView = inflater.inflate(R.layout.gallery_image_item, parent, false);
         }
         ImageView imageView = (ImageView)convertView.findViewById(R.id.galleryItem);
-        new ImageLoader(baseurl + imageId[position] + "&key=" + key, imageView, imageCache).loadImage();
+        String imageURL = baseurl + imageId[position] + "&key=" + key;
+        Picasso.with(context).load(imageURL).into(imageView);
         return convertView;
     }
 }

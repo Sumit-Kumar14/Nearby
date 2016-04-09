@@ -1,9 +1,5 @@
 package com.infinity.dev.nearby;
 
-/**
- * Created by suny on 6/8/15.
- */
-
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
@@ -43,18 +39,18 @@ public class GetLocation implements LocationListener {
         }
         else{
             canGetLocation = true;
-            if(isNetworkEnabled){
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_TO_UPDATE, MIN_DISTANCE_FOR_UPDATE, this);
-                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if(isGPSEnabled){
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_TO_UPDATE, MIN_DISTANCE_FOR_UPDATE, this);
+                location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
                 if(location != null){
                     latitude = location.getLatitude();
                     longitude = location.getLongitude();
                 }
             }
-            if(isGPSEnabled){
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_TO_UPDATE, MIN_DISTANCE_FOR_UPDATE, this);
-                location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if(isNetworkEnabled){
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_TO_UPDATE, MIN_DISTANCE_FOR_UPDATE, this);
+                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
                 if(location != null){
                     latitude = location.getLatitude();

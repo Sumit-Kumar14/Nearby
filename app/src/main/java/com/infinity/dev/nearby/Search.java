@@ -1,7 +1,6 @@
 package com.infinity.dev.nearby;
 
 import android.content.Intent;
-import android.location.Location;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
@@ -20,13 +19,11 @@ import com.infinity.dev.Utility.FetchFromServerTask;
 import com.infinity.dev.Utility.FetchFromServerUser;
 import com.infinity.dev.Utility.GooglePlacesBean;
 import com.infinity.dev.Utility.GooglePlacesParser;
-import com.infinity.dev.Utility.Locatable;
-import com.infinity.dev.Utility.Locator;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Search extends FragmentActivity implements FetchFromServerUser, Locatable{
+public class Search extends FragmentActivity implements FetchFromServerUser{
 
     private AutoCompleteTextView mAutocompleteView;
 
@@ -42,6 +39,8 @@ public class Search extends FragmentActivity implements FetchFromServerUser, Loc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        final GetLocation location = new GetLocation(this);
 
         ImageView back = (ImageView)findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +62,36 @@ public class Search extends FragmentActivity implements FetchFromServerUser, Loc
                 }
             }
         });
-        new Locator(this, this).execute();
+
+        resultAdapter = new SearchResultAdapter(this, results);
+        mAutocompleteView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                results.clear();
+                Uri.Builder builder = new Uri.Builder();
+                builder.scheme("https")
+                        .encodedAuthority(GOOGLE_PLACES_URL)
+                        .appendQueryParameter("input", s.toString())
+                        .appendQueryParameter("location", location.latitude + "," + location.longitude)
+                        .appendQueryParameter("radius", String.valueOf(SEARCH_RADIUS))
+                        .appendQueryParameter("key", PLACES_API_KEY);
+
+                String url = builder.build().toString();
+                Log.e("URL", url);
+                new FetchFromServerTask(Search.this, 0).execute(url);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
     }
 
     @Override
@@ -94,37 +122,5 @@ public class Search extends FragmentActivity implements FetchFromServerUser, Loc
                 }
             });
         }
-    }
-
-    @Override
-    public void onLocationComplete(final Location location) {
-        resultAdapter = new SearchResultAdapter(this, results);
-        mAutocompleteView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                results.clear();
-                Uri.Builder builder = new Uri.Builder();
-                builder.scheme("https")
-                        .encodedAuthority(GOOGLE_PLACES_URL)
-                        .appendQueryParameter("input", s.toString())
-                        .appendQueryParameter("location", location.getLatitude() + "," + location.getLongitude())
-                        .appendQueryParameter("radius", String.valueOf(SEARCH_RADIUS))
-                        .appendQueryParameter("key", PLACES_API_KEY);
-
-                String url = builder.build().toString();
-                Log.e("URL", url);
-                new FetchFromServerTask(Search.this, 0).execute(url);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
     }
 }

@@ -11,9 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -79,22 +77,6 @@ public class PlaceDetail extends FragmentActivity implements FetchFromServerUser
         mViewPager = (ViewPager) findViewById(R.id.places_detail);
         mViewPager.setPageTransformer(true, new PagerAnimation());
 
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOffscreenPageLimit(2);
 
@@ -147,9 +129,15 @@ public class PlaceDetail extends FragmentActivity implements FetchFromServerUser
                 data.putString("Name", detailBean.getName());
                 fragAbout.setArguments(data);
 
-                initFragments();
+                Bundle photos = new Bundle();
+                photos.putStringArray("photos", detailBean.getPhotos());
+                fragGallery.setArguments(photos);
 
-                PlaceDetailBean.Review[] reviewsArray = detailBean.getReviews();
+                Bundle reviews = new Bundle();
+                reviews.putSerializable("reviews", detailBean.getReviews());
+                fragReview.setArguments(reviews);
+
+                initFragments();
 
                 //Initialize About Fragment
                 TextView detailName = (TextView) findViewById(R.id.places_detail_name);
@@ -162,25 +150,6 @@ public class PlaceDetail extends FragmentActivity implements FetchFromServerUser
                 detailAddress.setText(detailBean.getFormatted_address());
                 rating.setRating(detailBean.getRating());
 
-                //Initialize Review Fragment
-                ListView reviews = (ListView) findViewById(R.id.review_list);
-                if (reviewsArray != null && reviewsArray.length > 0) {
-                    ReviewAdapter reviewsAdapter = new ReviewAdapter(reviewsArray, this);
-                    reviews.setAdapter(reviewsAdapter);
-                } else {
-                    TextView no_Review = (TextView) findViewById(R.id.no_reviews);
-                    no_Review.setText("Sorry, no reviews available for this place");
-                }
-
-                //Initialize Gallery Fragment
-                GridView gridView = (GridView) findViewById(R.id.placesImage);
-                String[] photosArray = detailBean.getPhotos();
-                if (photosArray != null && photosArray.length > 0) {
-                    gridView.setAdapter(new PlaceImages(this, photosArray));
-                } else {
-                    TextView no_Image = (TextView) findViewById(R.id.no_images);
-                    no_Image.setText("Sorry, no images available for this place");
-                }
             }catch (Exception ex){
                 errorFragment = new ErrorFragment();
                 Bundle msg = new Bundle();

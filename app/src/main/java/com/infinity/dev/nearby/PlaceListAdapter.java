@@ -16,7 +16,7 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.View
 
     Context context;
     List<PlaceBean> list;
-    Location loc;
+    GetLocation loc;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView name;
@@ -37,7 +37,7 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.View
         }
     }
 
-    public PlaceListAdapter(Context context, List<PlaceBean> list, Location loc){
+    public PlaceListAdapter(Context context, List<PlaceBean> list, GetLocation loc){
         this.context = context;
         this.list = list;
         this.loc = loc;
@@ -72,7 +72,7 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.View
             holder.isOpen.setText("Currently Closed");
         }
         holder.address.setText(list.get(position).getVicinity());
-        double distance = distance(loc.getLatitude(), loc.getLongitude(), list.get(position).getLatitude(), list.get(position).getLongitude(), "K");
+        double distance = distance(loc.latitude, loc.longitude, list.get(position).getLatitude(), list.get(position).getLongitude(), "K");
         holder.time.setText(String.format("%.2f", ((distance / 5) * 60)) + " min");
         if(distance < 1)
             holder.distance.setText(String.format("%.0f", distance * 1000) + " m");

@@ -3,6 +3,7 @@ package com.infinity.dev.PlaceDetail;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.infinity.dev.Utility.LRUImageCache;
 import com.infinity.dev.nearby.R;
 
 public class ReviewAdapter extends BaseAdapter {
@@ -25,8 +24,6 @@ public class ReviewAdapter extends BaseAdapter {
     String key = "AIzaSyBg-iwzAjavEUVV9hOQUr0JljZHL7XFRkQ";
 
     String colors = "#005968";
-
-    LRUImageCache imageCache = new LRUImageCache();
 
     public ReviewAdapter(PlaceDetailBean.Review []reviews, Context context){
         this.reviews = reviews;
@@ -69,9 +66,9 @@ public class ReviewAdapter extends BaseAdapter {
         if(reviews[position].getAuthor_url() != null && reviews[position].getAuthor_url().length() > 24) {
             String author_url = baseURL + reviews[position].getAuthor_url().substring(24) + "?fields=image&key=" + key;
             try {
-                new ImageLoader(author_url, icon, imageCache).loadThumbnailImage();
+                new ImageLoader(context, author_url, icon).loadThumbnailImage();
             }catch (Exception ex){
-                Toast.makeText(context, ex.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("ReviewAdapter", ex.getMessage());
             }
         }
         return convertView;
